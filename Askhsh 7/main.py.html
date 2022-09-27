@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #cc7832;}
+.s2 { color: #808080;}
+.s3 { color: #6897bb;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre>
+<span class="s1">def </span><span class="s0">main():</span>
+    <span class="s2"># Δημιουργια και populating λιστας προς συγκριση</span>
+    <span class="s0">lst = [</span><span class="s1">None</span><span class="s0">] * </span><span class="s3">20</span>
+    <span class="s0">i = </span><span class="s3">0</span>
+    <span class="s1">while </span><span class="s0">(lst[-</span><span class="s3">1</span><span class="s0">] </span><span class="s1">is None</span><span class="s0">):</span>
+        <span class="s0">lst[i] = int(input(</span><span class="s4">&quot;Please enter number #%d: &quot; </span><span class="s0">% (i + </span><span class="s3">1</span><span class="s0">)))</span>
+        <span class="s0">i += </span><span class="s3">1</span>
+    <span class="s0">print(</span><span class="s4">&quot;A grand total of %d user entry/entries either matched, or was/were off by 1 &quot; </span><span class="s0">% (nag(lst)))</span>
+
+
+<span class="s1">def </span><span class="s0">nag(lst):</span>
+    <span class="s1">import </span><span class="s0">requests</span>
+    <span class="s1">import </span><span class="s0">json</span>
+    <span class="s1">import </span><span class="s0">numpy </span><span class="s1">as </span><span class="s0">np</span>
+
+    <span class="s2"># βρισκουμε τους αριθμους που κερδισαν και τους βαζουμε στην win_list</span>
+    <span class="s0">r = requests.get(</span><span class="s4">&quot;https://api.opap.gr/draws/v3.0/1100/last-result-and-active&quot;</span><span class="s0">)</span>
+    <span class="s0">j = r.json()</span>
+    <span class="s0">win_list = j[</span><span class="s4">'last'</span><span class="s0">][</span><span class="s4">'winningNumbers'</span><span class="s0">][</span><span class="s4">'list'</span><span class="s0">]</span>
+
+    <span class="s2"># βρισκουμε ποσοι αριθμοι ηταν ακριβως ιδιοι με αυτους που νικησαν</span>
+    <span class="s0">identical_numbers = (np.intersect1d(lst</span><span class="s1">, </span><span class="s0">win_list))</span>
+    <span class="s0">num_of_identical_numbers = len(identical_numbers)</span>
+
+    <span class="s2"># αν ενας αριθμος ειναι ιδιος με εναν winning number δεν μας νοιαζει αν απεχει ενα, οποτε τον κανουμε purge απο την λιστα μας</span>
+    <span class="s1">for </span><span class="s0">ii </span><span class="s1">in </span><span class="s0">range(</span><span class="s3">0</span><span class="s1">, </span><span class="s0">num_of_identical_numbers):</span>
+        <span class="s0">lst.remove(identical_numbers[ii])</span>
+
+    <span class="s2"># το προγραμμα επιτρεπει απροσδιοριστο αριθμο ψηφιων δωσμενα απο τον χρηστη να ικανοποιουν την συνθηκη, δηλαδη: αν ο χρηστης δωσει τους αριθμους 7,8 μεταξυ αλλων, και οι νικητηριοι αριθμοι ειναι [80,79,...,70,8,69,...,30], τοτε θα τυπωσει πως 2 αριθμοι ικανοποιουν τη συνθηκη</span>
+    <span class="s0">win_list_down_one = [</span><span class="s1">None</span><span class="s0">] * </span><span class="s3">20</span>
+    <span class="s1">for </span><span class="s0">j </span><span class="s1">in </span><span class="s0">range(</span><span class="s3">0</span><span class="s1">, </span><span class="s3">20</span><span class="s0">):</span>
+        <span class="s0">win_list_down_one[j] = win_list[j] - </span><span class="s3">1</span>
+    <span class="s0">down_one_matches = np.intersect1d(lst</span><span class="s1">, </span><span class="s0">win_list_down_one)</span>
+    <span class="s0">num_of_down_one_matches = len(down_one_matches)</span>
+    <span class="s2"># κανουμε purge οσους απεχουν -1, ιδια λογικη με πριν</span>
+    <span class="s1">for </span><span class="s0">jj </span><span class="s1">in </span><span class="s0">range(</span><span class="s3">0</span><span class="s1">, </span><span class="s0">num_of_down_one_matches):</span>
+        <span class="s0">lst.remove(down_one_matches[jj])</span>
+
+    <span class="s0">win_list_up_one = [</span><span class="s1">None</span><span class="s0">] * </span><span class="s3">20</span>
+    <span class="s1">for </span><span class="s0">k </span><span class="s1">in </span><span class="s0">range(</span><span class="s3">0</span><span class="s1">, </span><span class="s3">20</span><span class="s0">):</span>
+        <span class="s0">win_list_up_one[k] = win_list[k] + </span><span class="s3">1</span>
+    <span class="s0">up_one_matches = np.intersect1d(lst</span><span class="s1">, </span><span class="s0">win_list_up_one)</span>
+    <span class="s0">num_of_up_one_matches = len(up_one_matches)</span>
+    <span class="s2"># τριτο purge δεν χρειαζεται να κανουμε μιας και δεν θα χρησιμοποιησουμε το list αλλο</span>
+
+    <span class="s0">num_of_matches = num_of_identical_numbers + num_of_down_one_matches + num_of_up_one_matches</span>
+    <span class="s2"># ενας εναλλακτικος τροπος να βρουμε το num_of_matches θα ηταν να συγκρινουμε το αρχικο len της lst με το τωρινο</span>
+    <span class="s1">return </span><span class="s0">num_of_matches</span>
+
+
+<span class="s1">if </span><span class="s0">__name__ == </span><span class="s4">'__main__'</span><span class="s0">:</span>
+    <span class="s0">main()</span></pre>
+</body>
+</html>

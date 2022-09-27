@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre><span class="s0">def </span><span class="s1">printRoman(number):</span>
+    <span class="s1">num = [</span><span class="s2">1</span><span class="s0">, </span><span class="s2">4</span><span class="s0">, </span><span class="s2">5</span><span class="s0">, </span><span class="s2">9</span><span class="s0">, </span><span class="s2">10</span><span class="s0">, </span><span class="s2">40</span><span class="s0">, </span><span class="s2">50</span><span class="s0">, </span><span class="s2">90</span><span class="s0">,</span>
+           <span class="s2">100</span><span class="s0">, </span><span class="s2">400</span><span class="s0">, </span><span class="s2">500</span><span class="s0">, </span><span class="s2">900</span><span class="s0">, </span><span class="s2">1000</span><span class="s1">]</span>
+    <span class="s1">sym = [</span><span class="s3">&quot;I&quot;</span><span class="s0">, </span><span class="s3">&quot;IV&quot;</span><span class="s0">, </span><span class="s3">&quot;V&quot;</span><span class="s0">, </span><span class="s3">&quot;IX&quot;</span><span class="s0">, </span><span class="s3">&quot;X&quot;</span><span class="s0">, </span><span class="s3">&quot;XL&quot;</span><span class="s0">,</span>
+           <span class="s3">&quot;L&quot;</span><span class="s0">, </span><span class="s3">&quot;XC&quot;</span><span class="s0">, </span><span class="s3">&quot;C&quot;</span><span class="s0">, </span><span class="s3">&quot;CD&quot;</span><span class="s0">, </span><span class="s3">&quot;D&quot;</span><span class="s0">, </span><span class="s3">&quot;CM&quot;</span><span class="s0">, </span><span class="s3">&quot;M&quot;</span><span class="s1">]</span>
+    <span class="s1">i = </span><span class="s2">12</span>
+
+    <span class="s0">while </span><span class="s1">number:</span>
+        <span class="s1">div = number // num[i]</span>
+        <span class="s1">number %= num[i]</span>
+
+        <span class="s0">while </span><span class="s1">div:</span>
+            <span class="s1">print(sym[i]</span><span class="s0">, </span><span class="s1">end=</span><span class="s3">&quot;&quot;</span><span class="s1">)</span>
+            <span class="s1">div -= </span><span class="s2">1</span>
+        <span class="s1">i -= </span><span class="s2">1</span>
+
+
+<span class="s0">if </span><span class="s1">__name__ == </span><span class="s3">&quot;__main__&quot;</span><span class="s1">:</span>
+    <span class="s1">number = int(input(</span><span class="s3">'Please enter an integer smaller than 1000000: '</span><span class="s0">, </span><span class="s1">))</span>
+    <span class="s0">while </span><span class="s1">(number &lt; </span><span class="s2">0 </span><span class="s0">or </span><span class="s1">number &gt; </span><span class="s2">1000000</span><span class="s1">):</span>
+        <span class="s1">number = int(input(</span><span class="s3">'Please enter an integer smaller than 1000000: '</span><span class="s0">, </span><span class="s1">))</span>
+    <span class="s1">print(</span><span class="s3">&quot;Roman value is:&quot;</span><span class="s0">, </span><span class="s1">end=</span><span class="s3">&quot; &quot;</span><span class="s1">)</span>
+    <span class="s1">printRoman(number)</span></pre>
+</body>
+</html>
